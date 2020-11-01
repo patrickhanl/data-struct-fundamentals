@@ -1,0 +1,34 @@
+treeNode * zigZigLeft(treeNode * currentNode) {
+    treeNode * parent = currentNode->parent, * leftChild = currentNode->left, * parentLeftChild = currentNode->parent->left, * grandParent = currentNode->parent->parent;
+    
+    currentNode->parent = grandParent->parent;
+    currentNode->left = parent;
+    
+    parent->parent = currentNode;
+    parent->right = leftChild;
+    parent->left = grandParent;
+    
+    if (parentLeftChild != NULL) {
+        parentLeftChild->parent = grandParent;
+    }
+    
+    if (leftChild != NULL) {
+        leftChild->parent = parent;
+    }
+    
+    if (grandParent->parent != NULL) {
+        if (currentNode->key > grandParent->parent->key) {
+            grandParent->parent->right = currentNode;
+        } else {
+            grandParent->parent->left = currentNode;
+        }
+    }
+    grandParent->right = parentLeftChild;
+    grandParent->parent = parent;
+    
+    newSum(grandParent);
+    newSum(parent);
+    newSum(currentNode);
+    
+    return currentNode;
+}

@@ -1,0 +1,19 @@
+treeNode * zigRight (treeNode * currentNode) {
+    treeNode * rightChild = currentNode->right, * root = currentNode->parent;
+    
+    if (rightChild != NULL) {
+        rightChild->parent = root;
+    }
+    root->left = rightChild;
+    
+    root->parent = currentNode;
+    currentNode->right = root;
+    
+    newSum(root);
+    
+    currentNode->parent = NULL;
+    
+    newSum(currentNode);
+    
+    return currentNode;
+}
